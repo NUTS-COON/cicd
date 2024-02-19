@@ -10,11 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
-      - name: Set up Go
-        uses: actions/setup-go@v4
-        with:
-          go-version: '1.20'
+      - uses: actions/setup-go@v4
 
       - name: Build
         run: go build -v ./...
@@ -44,11 +40,11 @@ jobs:
 
   # Задание проверяет код на соответствие стилю и отсутствие логических ошибок
   lint:
-    # Задание "lint" зависит от заданий "check" и ""tests" и будет выполнено после них
+    # Задание "lint" зависит от заданий "tests" и "tests-race" и будет выполнено после них
     needs: [tests, tests-race]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-go@v4
-      # используется действие "golangci/golangci-lint-action@v3", которое запускает линтер. Он проверит код на соответствие стилю и отсутствие логических ошибок
+      # Используется действие "golangci/golangci-lint-action@v3", которое запускает линтер. Он проверит код на соответствие стилю и отсутствие логических ошибок
       - uses: golangci/golangci-lint-action@v3
